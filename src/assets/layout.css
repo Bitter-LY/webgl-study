@@ -1,0 +1,17 @@
+#app .LayoutHeader {
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  height: 40px;
+}
+
+#app .LayoutMain {
+  top: 40px;
+  bottom: 30px;
+}
+
+#app .LayoutContent {
+  flex: 1;
+  height: 100%;
+  padding: 20px;
+}
