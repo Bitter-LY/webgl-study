@@ -1,3 +1,9 @@
+export function randomCoordsFloat32Array(length: number): Float32Array {
+  const arr = []
+  for (let i = 0; i < length; i++) arr.push(Math.random())
+  return new Float32Array(arr)
+}
+
 export function rectToWebGLCoords(
   canvas: HTMLCanvasElement,
   x: number,

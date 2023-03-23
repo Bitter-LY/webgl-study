@@ -43,6 +43,17 @@ const routes: _RouteRecordRaw[] = [
         label: 'ClickPoint'
       }
     }
+  },
+  {
+    path: '/buffer-vertex',
+    name: 'BufferVertex',
+    component: () => import('@/views/BufferVertex'),
+    meta: {
+      title: 'BufferVertex',
+      sider: {
+        label: 'BufferVertex'
+      }
+    }
   }
 ]
 

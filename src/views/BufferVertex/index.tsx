@@ -2,6 +2,8 @@ import { defineComponent, onMounted } from 'vue'
 import { getCanvas, getWebGLContext, layoutCanvas } from '@/packages/_utils/canvas'
 import { initShaders } from '@/packages/_utils/shader'
 import { ColorGray, ColorRed } from '@/packages/_utils/gl-color'
+import { randomCoordsFloat32Array } from '@/packages/_utils/coords'
+import { initVertexBuffer } from '@/packages/_utils/vertex-buffer'
 
 import vshader from './vshader.glsl?raw'
 import fshader from './fshader.glsl?raw'
@@ -14,14 +16,18 @@ function draw(gl: WebGLRenderingContext, program: WebGLProgram) {
   const uFragColor = gl.getUniformLocation(program, 'u_FragColor')
   if (uFragColor === null) return
 
-  gl.vertexAttrib4fv(aPosition, new Float32Array([0.0, 0.0, 0.0, 1.0]))
+  const size = 2
+  const count = 3
+  const data = randomCoordsFloat32Array(count * size)
+  if (!initVertexBuffer(gl, data, size, aPosition)) return
+
   gl.uniform4fv(uFragColor, new Float32Array([...ColorRed, 1.0]))
   gl.vertexAttrib1f(aPointSize, 30.0)
-  gl.drawArrays(gl.POINTS, 0, 1)
+  gl.drawArrays(gl.POINTS, 0, data.length / size)
 }
 
 function main() {
-  const canvas = getCanvas('#{{name}}')
+  const canvas = getCanvas('#BufferVertex')
   if (!canvas) throw new Error('没有获取到canvas element！')
   layoutCanvas(canvas, canvas.clientWidth, canvas.clientHeight)
 
@@ -38,14 +44,14 @@ function main() {
 }
 
 export default defineComponent({
-  name: '{{name}}',
+  name: 'BufferVertex',
   setup() {
     onMounted(main)
   },
   render() {
     return (
       <canvas
-        id="{{name}}"
+        id="BufferVertex"
         class="demo-gl"
       ></canvas>
     )
