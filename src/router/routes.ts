@@ -54,6 +54,17 @@ const routes: _RouteRecordRaw[] = [
         label: 'BufferVertex'
       }
     }
+  },
+  {
+    path: '/base-graph',
+    name: 'BaseGraph',
+    component: () => import('@/views/BaseGraph'),
+    meta: {
+      title: 'BaseGraph',
+      sider: {
+        label: 'BaseGraph'
+      }
+    }
   }
 ]
 
