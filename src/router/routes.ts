@@ -76,6 +76,17 @@ const routes: _RouteRecordRaw[] = [
         label: 'DeriveGraph'
       }
     }
+  },
+  {
+    path: '/transform-graph',
+    name: 'TransformGraph',
+    component: () => import('@/views/TransformGraph'),
+    meta: {
+      title: 'TransformGraph',
+      sider: {
+        label: 'TransformGraph'
+      }
+    }
   }
 ]
 
