@@ -80,7 +80,8 @@ const renders = {
     gl.drawArrays(gl.TRIANGLES, 0, count)
   },
   Scale(gl: WebGLRenderingContext, aPosition: number, uMatrix4: WebGLUniformLocation) {
-    matrix4.scale(new Vector3(2, 1, 1))
+    matrix4.scale(new Vector3(2, 1, 1)).translation(new Vector3(0.5, 0, 0))
+
     gl.uniformMatrix4fv(uMatrix4, false, matrix4.elements)
     gl.clear(gl.COLOR_BUFFER_BIT)
     gl.drawArrays(gl.TRIANGLES, 0, count)

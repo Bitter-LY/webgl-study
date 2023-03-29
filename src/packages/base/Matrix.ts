@@ -1,18 +1,36 @@
 /**
- * 3x3
+ *
+ * Layout[3x3]
  *  ---------------------------
  * | cos|scale,      -sin, x   |
  * |       sin, cos|scale, y   |
  * |       0.0,       0.0, 1.0 |
  *  ---------------------------
  *
- * 4x4
+ * Layout[4x4]
  *  ----------------------------------
  * | cos|scale,      -sin,   0.0, x   |
  * |       sin, cos|scale,   0.0, y   |
  * |       0.0,       0.0, scale, z   |
  * |       0.0,       0.0,   0.0, 1.0 |
  *  ----------------------------------
+ *
+ * Index[3x3]
+ *  ----------
+ * | 0, 4,  8 |
+ * | 1, 5,  9 |
+ * | 2, 6, 10 |
+ * | 3, 7, 11 |
+ *  ----------
+ *
+ * Index[4x4]
+ *  --------------
+ * | 0, 4,  8, 12 |
+ * | 1, 5,  9, 13 |
+ * | 2, 6, 10, 14 |
+ * | 3, 7, 11, 15 |
+ *  --------------
+ *
  */
 
 import type { Vector3 } from './Vector'
@@ -22,7 +40,6 @@ interface Matrix<T> {
 
   set(rm: number[]): T
   identity(): T
-
   scale(v: Vector3): T
 }
 
@@ -166,6 +183,17 @@ export class Matrix4 implements Matrix<Matrix4> {
     te[9] *= z
     te[10] *= z
     te[11] *= z
+
+    return this
+  }
+
+  translation(v: Vector3): Matrix4 {
+    const { x, y, z } = v
+    const te = this.elements
+
+    te[12] = x
+    te[13] = y
+    te[14] = z
 
     return this
   }
