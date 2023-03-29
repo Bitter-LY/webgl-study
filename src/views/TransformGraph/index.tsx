@@ -4,11 +4,11 @@ import { initShaders } from '@/packages/_utils/shader'
 import { ColorGray, ColorRed } from '@/packages/_utils/gl-color'
 import { initVertexBuffer } from '@/packages/_utils/vertex-buffer'
 import RadioController, { type RadioControllerConfig } from '@/components/RadioController'
+import { Matrix4 } from '@/packages/base/Matrix'
+import { Vector3 } from '@/packages/base/Vector'
 
 import vshader from './vshader.glsl?raw'
 import fshader from './fshader.glsl?raw'
-import { Matrix4 } from '@/packages/base/Matrix'
-import { Vector3 } from '@/packages/base/Vector'
 
 class WebGLState {
   readonly programMap = new Map<string, WebGLBuffer>()
@@ -35,7 +35,7 @@ const webGLState = new WebGLState()
 const matrix4 = new Matrix4()
 
 const controllerConfig = reactive<RadioControllerConfig>({
-  value: 'Translate',
+  value: 'Default',
   onChange(v) {
     controllerConfig.value = v
     draw()
@@ -63,25 +63,25 @@ const controllerConfig = reactive<RadioControllerConfig>({
 const renders = {
   Default(gl: WebGLRenderingContext, uMatrix4: WebGLUniformLocation) {
     matrix4.identity()
-    gl.uniformMatrix4fv(uMatrix4, false, new Float32Array(matrix4.elements))
+    gl.uniformMatrix4fv(uMatrix4, false, matrix4.elements)
     gl.clear(gl.COLOR_BUFFER_BIT)
     gl.drawArrays(gl.TRIANGLES, 0, count)
   },
   Translate(gl: WebGLRenderingContext, uMatrix4: WebGLUniformLocation) {
     matrix4.makeTranslation(0.5, 0.0, 0.0)
-    gl.uniformMatrix4fv(uMatrix4, false, new Float32Array(matrix4.elements))
+    gl.uniformMatrix4fv(uMatrix4, false, matrix4.elements)
     gl.clear(gl.COLOR_BUFFER_BIT)
     gl.drawArrays(gl.TRIANGLES, 0, count)
   },
   Rotate(gl: WebGLRenderingContext, aPosition: number, uMatrix4: WebGLUniformLocation) {
     matrix4.makeRotationZ((Math.PI * 180) / 180)
-    gl.uniformMatrix4fv(uMatrix4, false, new Float32Array(matrix4.elements))
+    gl.uniformMatrix4fv(uMatrix4, false, matrix4.elements)
     gl.clear(gl.COLOR_BUFFER_BIT)
     gl.drawArrays(gl.TRIANGLES, 0, count)
   },
   Scale(gl: WebGLRenderingContext, aPosition: number, uMatrix4: WebGLUniformLocation) {
     matrix4.scale(new Vector3(2, 1, 1))
-    gl.uniformMatrix4fv(uMatrix4, false, new Float32Array(matrix4.elements))
+    gl.uniformMatrix4fv(uMatrix4, false, matrix4.elements)
     gl.clear(gl.COLOR_BUFFER_BIT)
     gl.drawArrays(gl.TRIANGLES, 0, count)
   }
@@ -156,7 +156,7 @@ export default defineComponent({
   name: 'TransformGraph',
   setup() {
     onMounted(main)
-    onUnmounted(() => (controllerConfig.value = 'Translate'))
+    onUnmounted(() => (controllerConfig.value = 'Default'))
   },
   render() {
     return (

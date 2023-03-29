@@ -18,7 +18,7 @@
 import type { Vector3 } from './Vector'
 
 interface Matrix<T> {
-  elements: number[]
+  elements: Float32Array
 
   set(rm: number[]): T
   identity(): T
@@ -27,10 +27,12 @@ interface Matrix<T> {
 }
 
 export class Matrix4 implements Matrix<Matrix4> {
-  elements: number[] = []
+  elements: Float32Array
 
   constructor() {
-    this.elements = [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+    this.elements = new Float32Array([
+      1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0
+    ])
   }
 
   set(rm: number[]): Matrix4 {
