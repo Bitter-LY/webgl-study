@@ -87,6 +87,17 @@ const routes: _RouteRecordRaw[] = [
         label: 'TransformGraph'
       }
     }
+  },
+  {
+    path: '/cesium',
+    name: 'CesiumMap',
+    component: () => import('@/views/CesiumMap'),
+    meta: {
+      title: 'CesiumMap',
+      sider: {
+        label: 'CesiumMap'
+      }
+    }
   }
 ]
 
